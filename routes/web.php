@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\cofecontroller;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +28,11 @@ Route::prefix('cofe')->group(function(){
     Route::get('/products', [cofecontroller::class , 'products'])->name('products');
     Route::get('/store', [cofecontroller::class , 'store'])->name('store');
 
+});
 
+Route::prefix('admin')->group(function(){
 
-
-
-
+Route::get('/',[AdminController::class,'index'])->name('index');
+Route::resource('/products',ProductController::class);
 
 });

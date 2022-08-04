@@ -40,7 +40,7 @@
         </nav>
        @yield('content')
         <footer class="footer text-faded text-center py-5">
-            <div class="container"><p class="m-0 small">Copyright &copy; {{env('APP_NAME')}} {{now()->year}}-{{now()->year+1}}</p></div>
+            <div class="container"><p class="m-0 small">Copyright &copy; {{env('APP_NAME')}}     ({{now()->year}}-{{now()->year+1}})</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="{{asset('front_asset/https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js')}}"></script>
