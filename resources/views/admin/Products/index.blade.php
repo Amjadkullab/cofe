@@ -30,14 +30,7 @@
           <td>{{$product->category_id}}</td>
           <td>{{$product->created_at}}</td>
           <td>{{$product->updated_at}}</td>
-         
         </tr>
-
-
-
-
-
-
       </tbody>
       @endforeach
 

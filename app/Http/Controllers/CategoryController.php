@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories= category::all();
+        return view('admin.Categories.index', compact('categories'));
     }
 
     /**
@@ -24,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+       return view('admin.Categories.create');
     }
 
     /**
@@ -35,7 +38,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $validator = validator($request->all(),[
+        'name' => 'required|string|min:3|max:30',
+      ]);
+      if(!$validator->Fails()){
+        $categories = new category();
+        $categories->name = $request->get('name');
+        $categories->slug = $request->get(Str::slug($request->name));
+        $isSaved = $categories->save();
+        return response()->json([
+            'message'=>$isSaved ? 'saved successfully' : 'failed save'
+        ],$isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+
+
+      }else {
+        return response()->json([
+            'message' => $validator->getMessageBag->first()
+        ],Response::HTTP_BAD_REQUEST);
+      }
     }
 
     /**
@@ -80,6 +100,19 @@ class CategoryController extends Controller
      */
     public function destroy(category $category)
     {
-        //
+      $isDeleted = $category->delete();
+      if($isDeleted ){
+      return response()->json([
+        'title'=> 'Success!',
+        'icon' => 'success',
+        'text'=> 'Category Deleted Successfully',
+      ],Response::HTTP_OK);}
+      else{
+        return response()->json([
+            'title'=> 'Failed!',
+            'icon' => 'Failed',
+            'text'=> 'Category Deleted Failed',
+        ],Response::HTTP_BAD_REQUEST);
+      }
     }
 }

@@ -17,6 +17,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('admin_asset/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin_asset/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{asset('admin_asset/plugins/fontawesome-free/css/all.min.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('admin_asset/sweetalert2.min.css')}}"> --}}
+    <link rel="stylesheet" href="{{asset('admin_asset/plugins/toastr/toastr.min.css')}}">
+@yield('styles')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -234,7 +238,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-                        <li class="nav-item menu-open">
+                        <li class="nav-item ">
                             <a href="#" class="nav-link ">
                                 <i class="fas fa-list-alt"></i>
 
@@ -251,7 +255,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{route('categories.create')}}" class="nav-link">
                                         <i class="far fa-plus-square  nav-icon"></i>
 
                                         <p>Create</p>
@@ -259,7 +263,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item menu-open">
+                        <li class="nav-item ">
                             <a href="#" class="nav-link ">
                                 <i class="nav-icon fas fa-layer-group"></i>
 
@@ -269,14 +273,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
+                                    <a href="{{route('categories.index')}}" class="nav-link active">
 
                                         <i class="fas fa-list-ul nav-icon"></i>
                                         <p>Index</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{route('categories.create')}}" class="nav-link">
                                         <i class="far fa-plus-square  nav-icon"></i>
 
                                         <p>Create</p>
@@ -338,11 +342,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- REQUIRED SCRIPTS -->
 
         <!-- jQuery -->
+
         <script src="{{ asset('admin_asset/plugins/jquery/jquery.min.js') }}"></script>
         <!-- Bootstrap 4 -->
         <script src="{{ asset('admin_asset/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('admin_asset/dist/js/adminlte.min.js') }}"></script>
+        <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="{{asset('admin_asset/plugins/toastr/toastr.min.js')}}"></script>
+        @yield('scripts')
 </body>
 
 </html>
