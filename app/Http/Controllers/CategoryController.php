@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category;
+use Dotenv\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,14 +39,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-      $validator = validator($request->all(),[
+      $validator = Validator($request->all(),[
         'name' => 'required|string|min:3|max:30',
       ]);
-      if(!$validator->Fails()){
-        $categories = new category();
-        $categories->name = $request->get('name');
-        $categories->slug = $request->get(Str::slug($request->name));
-        $isSaved = $categories->save();
+      if(!$validator->fails()){
+        $category = new category();
+        $category->name = $request->get('name');
+        // $category->slug = $request->get(Str::slug($request->name));
+        $isSaved = $category->save();
         return response()->json([
             'message'=>$isSaved ? 'saved successfully' : 'failed save'
         ],$isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
@@ -53,7 +54,7 @@ class CategoryController extends Controller
 
       }else {
         return response()->json([
-            'message' => $validator->getMessageBag->first()
+            'message' => $validator->getMessageBag()->first()
         ],Response::HTTP_BAD_REQUEST);
       }
     }
@@ -77,7 +78,7 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-        //
+      return view('admin.Categories.edit',compact('category'));
     }
 
     /**
@@ -89,7 +90,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, category $category)
     {
-        //
+        $validator = Validator($request->all(),[
+            'name'=> 'required|string'
+        ]);
+        if(!$validator->fails()){
+            $category->name=$request->get('name');
+            // $category->slug=Str::slug($request->get('name'));
+            $isUpdated = $category->save();
+            return response()->json([
+                'message'=>$isUpdated ? 'updated successfully' : 'updated failed'
+            ],$isUpdated ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json([
+                'message' =>   $validator->getMessageBag()->first()
+            ],Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**

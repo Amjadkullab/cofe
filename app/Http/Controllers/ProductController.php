@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\product;
+
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class ProductController extends Controller
 {
@@ -81,6 +84,20 @@ class ProductController extends Controller
      */
     public function destroy(product $product)
     {
-        //
+       $isdeleted = $product->delete();
+       if($isdeleted){
+        return response()->json([
+            'icon' =>'success',
+            'text' => 'Product Deleted Successfully',
+            'title' => 'Success!',
+
+        ],Response::HTTP_OK);
+       } else {
+        return response()->json([
+            'icon' =>'Failed',
+            'text' => 'Product Deleted Failed',
+            'title' => 'Failed!',
+        ],Response::HTTP_BAD_REQUEST);
+       }
     }
 }
