@@ -43,17 +43,16 @@
                 <td>{{$product->id}}</td>
                 <td>{{$product->name}}</td>
                 <td>{{$product->description}}</td>
-                <td>{{$product->image}}</td>
-                <td>{{$product->category_id}}</td>
+                <td><img width="110" src="{{asset('uploads/'. $product->image)}}" alt=""></td>
+                <td>{{$product->category->name}}</td>
                 <td>{{$product->created_at}}</td>
                 <td>{{$product->updated_at}}</td>
                 <td>
                     <div class="btn-group">
-                        <a href="{{route('products.edit',$product->id)}}"><i class="btn btn-info"></i></a>
-
+                        <a href="{{route('products.edit',$product->id)}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
 
                         <a href="#" class="btn btn-danger" onclick="confirmdestroy({{$product->id}},this)" >
-                         <i class="fas fa-trash"></i>
+                         <i class="fas fa-trash"></i></a>
                     </div>
 
                 </td>

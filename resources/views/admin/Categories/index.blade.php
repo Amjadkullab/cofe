@@ -46,8 +46,8 @@
   {{-- {{ dd($category)}} --}}
     <td>{{$category->id}}</td>
     <td>{{$category->name}}</td>
-    <td>{{$category->created_at}}</td>
-    <td>{{$category->updated_at}}</td>
+    <td>{{$category->created_at->format('d-m-y')}}</td>
+    <td>{{$category->updated_at->format('d-m-y')}}</td>
     <td>
         <div class="btn-group">
           <a href="{{route('categories.edit',$category->id)}}" class="btn btn-info">
