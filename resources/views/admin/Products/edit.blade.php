@@ -22,9 +22,10 @@
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="name" class="form-control" id="name" placeholder="Enter name"
-                                        value="{{$product->name}}">
+                                        value="{{$product->name}}"> </div>
 
-                                </div>
+
+
                                 <div class="form-group">
                                     <label for="description">Description</label>
                                     <input type="text" class="form-control" id="description"
@@ -41,7 +42,7 @@
                                             <input type="file" class="custom-file-input" id="image">
 
                                             <label class="custom-file-label" for="image">Choose Image</label>
-                                            <img width="110" src="{{asset('uploads/' . $product->image)}}"
+                                            <img width="100" src="{{asset('uploads/'.$product->image)}}"
                                                 alt="">
                                         </div>
                                         <div class="input-group-append">
@@ -68,7 +69,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
 
-                                    <button type="button" onclick="update({{$product->id}})"
+                                    <button type="button" onclick="Update({{$product->id}})"
                                         class="btn btn-primary">Update</button>
                                 </div>
                         </form>
@@ -91,13 +92,13 @@
 @endsection
 @section('scripts')
     <script>
-        function update(id) {
+        function Update(id) {
             let formData = new FormData;
             formData.append('name', document.getElementById('name').value);
             formData.append('description', document.getElementById('description').value);
             formData.append('image', document.getElementById('image').files[0]);
             formData.append('category_id', document.getElementById('category_id').value);
-            axios.put('/admin/products/'+ id,formData )
+            axios.put('/admin/products/'+id,formData )
 
                 .then(function(response) {
                     // handle success

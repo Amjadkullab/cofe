@@ -106,10 +106,10 @@ class ProductController extends Controller
     public function update(Request $request, product $product)
     {
        $validator = Validator($request->all(),[
-        'name'=>'required|string',
-        'description'=>'required|string',
-        'image'=> 'required|image',
-        'category_id'=> 'required',
+        'name' => 'required|string',
+        'description' => 'required|string',
+        'image' =>  'required|image',
+        'category_id' =>  'required'
        ]);
        if(!$validator->fails()){
        $product->name = $request->get('name');

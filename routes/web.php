@@ -36,5 +36,6 @@ Route::prefix('admin')->group(function(){
 Route::get('/',[AdminController::class,'index'])->name('index');
 Route::resource('/products',ProductController::class);
 Route::resource('/categories',CategoryController::class);
+Route::resource('admin',AdminController::class);
 
 });

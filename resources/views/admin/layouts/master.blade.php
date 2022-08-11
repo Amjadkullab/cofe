@@ -220,38 +220,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
 
-
-
-
-          <li class="nav-header">Content Management</li>
-          {{-- <li class="nav-item">
+          <li class="nav-header">Human Resoueces</li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-apple-alt"></i>
+              <i class="nav-icon fa fa-user"></i>
               <p>
-               Products
+                Admins
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
-                    <a href="{{route('products.create')}}" class="nav-link">
-                      <i class="far fa-plus-square  nav-icon"></i>
-                      <p>create</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{route('products.index')}}" class="nav-link">
-                      <i class="fas fa-list-ul nav-icon"></i>
-                      <p>index</p>
-                    </a>
-                  </li>
-
-
-
+              <li class="nav-item">
+                <a href="{{route('admin.create')}}"class="nav-link">
+                  <i class="far fa-plus-square  nav-icon"></i>
+                  <p>create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>index</p>
+                </a>
+              </li>
 
             </ul>
-          </li> --}}
+          </li>
+          
 
 
+
+
+          <li class="nav-header">Content Management</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-apple-alt"></i>
