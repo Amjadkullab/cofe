@@ -175,7 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{asset('admin_asset/dist/img/user2-160x160.jpg')}}"  class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          {{-- <a href="#" class="d-block">{{auth()->user()->name}}</a> --}}
+          <a href="#" class="d-block">{{auth()->user()->name}}</a>
         </div>
       </div>
 
@@ -245,7 +245,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             </ul>
           </li>
-          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-user"></i>
+              <p>
+                Users
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+                <a href="{{route('user.create')}}"class="nav-link">
+                  <i class="far fa-plus-square  nav-icon"></i>
+                  <p>create</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('user.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>index</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
 
 
 
@@ -303,7 +327,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
 
-
+          <li class="nav-item">
+            <a href="{{route('logout')}}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt "></i>
+              <p>Logout</p>
+            </a>
+          </li>
 
 
 

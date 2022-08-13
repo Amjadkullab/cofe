@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\cofecontroller;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,11 +33,20 @@ Route::prefix('cofe')->group(function(){
 
 });
 
-Route::prefix('admin')->group(function(){
+
+Route::prefix('/')->middleware('guest:admin')->group(function(){
+Route::get('{guard}/login',[AuthController::class,'showlogin'])->name('login');
+Route::post('{guard}/login',[AuthController::class,'login'])->name('login');
+});
+
+Route::prefix('admin')->middleware('auth:admin,user')->group(function(){
 
 Route::get('/',[AdminController::class,'index'])->name('index');
 Route::resource('/products',ProductController::class);
 Route::resource('/categories',CategoryController::class);
 Route::resource('admin',AdminController::class);
+Route::resource('user',UserController::class);
+Route::get('logout',[AuthController::class,'logout'])->name('logout');
+
 
 });

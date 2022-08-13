@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use Dotenv\Validator;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::where('id','!=', auth('admin')->id())->get();
-        return view('admin.admins.index',compact('admins'));
+
+        $users = User::where('id','!=', auth('user')->id())->get();
+        return view('admin.Users.index',compact('users'));
 
     }
 
@@ -29,7 +29,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.admins.create');
+        return view('admin.Users.create');
     }
 
     /**
@@ -46,12 +46,12 @@ class AdminController extends Controller
             'active'=>'required|boolean'
         ]);
         if(!$validator->fails()){
-            $admin = new Admin();
-            $admin->name = $request->get('name');
-            $admin->email= $request->get('email');
-            $admin->password = Hash::make('password');
-            $admin->active = $request->get('active');
-            $isSaved = $admin->save();
+            $user = new User();
+            $user->name = $request->get('name');
+            $user->email= $request->get('email');
+            $user->password = Hash::make('password');
+            $user->active = $request->get('active');
+            $isSaved = $user->save();
             return response()->json([
                 'message'=>$isSaved ? 'Saved Successfully': 'Saved Failed'
             ],$isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
@@ -66,10 +66,10 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Admin  $admin
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function show($id)
     {
         //
     }
@@ -77,36 +77,39 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Admin  $admin
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admin $admin)
+    public function edit($id)
     {
-        return view('admin.admins.edit',compact('admin'));
+        $user = User::findorfail('id')->get();
+        return view('admin.Users.edit',compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Admin  $admin
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, $id)
     {
+
+  $user = User::findorfail('id')->get();
         $validator = Validator($request->all(),[
             'name'=> 'required|string|min:3|max:20',
             'email'=>'required|string',
             'active'=>'required|boolean'
         ]);
         if(!$validator->fails()){
-            $admin->name = $request->get('name');
-            $admin->email= $request->get('email');
-            $admin->password = Hash::make('password');
-            $admin->active = $request->get('active');
-            $isSaved = $admin->save();
+            $user->name = $request->get('name');
+            $user->email= $request->get('email');
+            $user->password = Hash::make('password');
+            $user->active = $request->get('active');
+            $isSaved = $user->save();
             return response()->json([
-                'message'=>$isSaved ? 'Updated Successfully': 'Updated Failed'
+                'message'=>$isSaved ? 'Saved Successfully': 'Saved Failed'
             ],$isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
 
         } else {
@@ -119,26 +122,29 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Admin  $admin
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        $isDeleted = $admin->delete();
-        if($isDeleted){
-            return response()->json([
-                'icon'=>'success',
-                'title'=>'Successfully!',
-                'text'=>'deleted successfully'
-            ],Response::HTTP_OK);
-        }else{
-            return response()->json([
-                'icon'=>'failed',
-                'title'=>'Failed!',
-                'text'=>'deleted failed'
 
-            ],Response::HTTP_BAD_REQUEST);
+        $user = User::findorfail('id')->get();
+        $isDeleted = $user->delete();
+        if($isDeleted){
+         return response()->json([
+             'icon'=> 'success',
+             'title'=> 'Success!',
+             'text'=> 'deleted successfully'
+         ], Response::HTTP_OK);
+        } else{
+         return response()->json([
+             'icon'=> 'error',
+             'title'=> 'Failed!',
+             'text'=> 'deleted Failed'
+         ], Response::HTTP_BAD_REQUEST);
+
         }
+    }
 
     }
-}
+
