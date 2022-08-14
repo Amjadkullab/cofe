@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -45,6 +46,38 @@ class AuthController extends Controller
                 'message' => $validator->getMessageBag()->first(),
             ], Response::HTTP_BAD_REQUEST);
         }
+    }
+
+
+    public function editpassword(){
+
+        return response()->view('admin.auth.changepassword');
+    }
+    public function updatepassword(Request $request){
+       $guard = auth('admin')->check() ? 'admin' : 'user' ;
+        $validator = Validator($request->all(),[
+            'current_password'=>"required|string|password:$guard",
+            'new_password'=>'required|string|confirmed'
+        ]);
+        if(!$validator->fails()){
+
+            $user = auth($guard)->user();
+            $user->password = Hash::make($request->get('new_password'));
+             $isSaved= $user->save();
+             return response()->json([
+                'message'=> $isSaved ? 'Updated Password Successfully' : 'Updated Password Failed'
+             ],Response::HTTP_OK);
+        } else{
+            return response()->json([
+                'message'=> $validator->getMessageBag()->first()
+            ],Response::HTTP_BAD_REQUEST);
+        }
+
+    }
+    public function editprofile(){
+       $view =  auth('admin')->check() ? 'admin.admins.edit' : 'admin.Users.edit' ;
+        $guard = auth('admin')->check() ? 'admin': 'user';
+        return response()->view($view , ['guard'=>auth($guard)->user()]);
     }
 
     public function logout(Request $request)
