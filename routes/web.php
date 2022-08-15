@@ -46,9 +46,9 @@ Route::resource('/products',ProductController::class);
 Route::resource('/categories',CategoryController::class);
 Route::resource('admin',AdminController::class);
 Route::resource('user',UserController::class);
-Route::get('edit-password',[AuthController::class,'editpassword']);
+Route::get('edit-password',[AuthController::class,'editpassword'])->name('edit-password');
 Route::put('update-password',[AuthController::class,'updatepassword']);
-Route::get('edit-profile',[AuthController::class,'editprofile']);
+Route::get('edit-profile',[AuthController::class,'editprofile'])->name('edit-profile');
 Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
 

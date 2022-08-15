@@ -16,14 +16,14 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form id="created_form">
+                        <form >
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="name" class="form-control" id="name" placeholder="Enter name"
-                                        value="@if (old('name')) {{ old('name') }}
-                                    @else  {{ $admin->name }} @endif">
+                                      value="@if(old('name')) {{old('name')}}@else
+                                      {{$admin->name}}@endif">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
@@ -33,11 +33,12 @@
                                 </div>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="active"
-
+                                    @if ($admin->id == auth('admin')->id()) disabled
+                                     @endif
                                         @if ($admin->active) checked @endif>
                                     <label class="custom-control-label" for="active">Active</label>
                                 </div>
-                                {{-- @if ($admin->id == auth('admin')->id) disabled @endif --}}
+
 
 
                                 <div class="form-group">
@@ -51,7 +52,7 @@
                                     <!-- /.card-body -->
                                     <div class="card-footer">
 
-                                        <button type="button" onclick="update({{ $admin->id }})"
+                                        <button type="button" onclick="update({{$admin->id}},'{{$redirect ?? 'true'}}')"
                                             class="btn btn-primary">Update</button>
                                     </div>
                         </form>
@@ -99,7 +100,7 @@
 
 
         // }
-        function update(id) {
+        function update(id,redirect) {
             axios.put('/admin/admin/' + id, {
                     name: document.getElementById('name').value,
                     email : document.getElementById('email').value,
@@ -109,7 +110,9 @@
                     // handle success
                     console.log(response);
                     toastr.success(response.data.message);
+                    if(redirect){
                     window.location.href = "/admin/admin/";
+                }
                 })
                 .catch(function(error) {
                     // handle error

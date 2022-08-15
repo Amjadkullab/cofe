@@ -45,7 +45,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
 
-                                    <button type="button" onclick="updatepassword()" class="btn btn-primary">Store</button>
+                                    <button type="button" onclick="updatepassword()" class="btn btn-primary">Update</button>
                                 </div>
                         </form>
                     </div>
@@ -93,17 +93,17 @@
 
     // }
     function updatepassword(){
-        axios.put('/admin/admin/',{
+        axios.put('/admin/admin/update-password',{
             current_password : document.getElementById('current_password').value,
             new_password : document.getElementById('new_password').value,
-            new_password_confirmation : document.getElementById('new_password_confirmation').value,
+            new_password_confirmation : document.getElementById('new_password_confirmation').value
 
          })
   .then(function (response) {
     // handle success
     console.log(response);
     toastr.success(response.data.message);
-    window.location.href="/admin/admin/";
+    document.getElementById('created_form').reset;
   })
   .catch(function (error) {
     // handle error

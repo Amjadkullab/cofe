@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\User;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,13 +56,12 @@ class AuthController extends Controller
         return response()->view('admin.auth.changepassword');
     }
     public function updatepassword(Request $request){
-       $guard = auth('admin')->check() ? 'admin' : 'user' ;
+       $guard = auth('admin')->check() ? 'admin':'user';
         $validator = Validator($request->all(),[
             'current_password'=>"required|string|password:$guard",
-            'new_password'=>'required|string|confirmed'
+            'new_password'=>'required|string|confirmed',
         ]);
         if(!$validator->fails()){
-
             $user = auth($guard)->user();
             $user->password = Hash::make($request->get('new_password'));
              $isSaved= $user->save();
@@ -75,9 +76,10 @@ class AuthController extends Controller
 
     }
     public function editprofile(){
+
        $view =  auth('admin')->check() ? 'admin.admins.edit' : 'admin.Users.edit' ;
         $guard = auth('admin')->check() ? 'admin': 'user';
-        return response()->view($view , ['guard'=>auth($guard)->user()]);
+        return response()->view($view,['guard'=>auth($guard)->user(),'redirect' => false]);
     }
 
     public function logout(Request $request)

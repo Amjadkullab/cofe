@@ -86,7 +86,7 @@
   }
 })
 function destroy(id,reference){
-    axios.delete('admin/products/'+ id)
+    axios.delete('/admin/products/'+ id)
   .then(function (response) {
     // handle success
     console.log(response);

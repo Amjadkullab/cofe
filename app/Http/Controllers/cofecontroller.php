@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\product;
 use Illuminate\Http\Request;
 
 class cofecontroller extends Controller
@@ -17,7 +18,8 @@ public function about(){
     return view('front.about');
 }
 public function products(){
-    return view('front.products');
+    $products = product::all();
+    return view('front.products',compact('products'));
 }
 public function store(){
     return view('front.store');
