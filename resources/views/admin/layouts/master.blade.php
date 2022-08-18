@@ -309,7 +309,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview" style="display: none;">
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{route('permissions.create')}}" class="nav-link">
                       <i class="far fa-plus-square  nav-icon"></i>
                       <p>create</p>
                     </a>
@@ -317,7 +317,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('permissions.index')}}" class="nav-link">
                   <i class="fas fa-list-ul nav-icon"></i>
                   <p>index</p>
                 </a>

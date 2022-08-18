@@ -1,8 +1,8 @@
 @extends('admin.layouts.master')
-@section('title', 'Roles')
-@section('page-title','Roles page')
+@section('title', 'Permission')
+@section('page-title','Permission page')
 @section('main-page-title','Home')
-@section('small-page-title','roles')
+@section('small-page-title','permissions')
 @section('content')
 
   <!-- Main content -->
@@ -14,7 +14,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Roles</h3>
+              <h3 class="card-title">permissions</h3>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -36,26 +36,25 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Guard</th>
-                    <th>permission</th>
-
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Settings</th>
                   </tr>
                 </thead>
                 <tbody>
-@foreach ($roles as $role)
+@foreach ($permissions as $permission)
 <tr>
-  {{-- {{ dd($category)}} --}}
-    <td>{{$role->id}}</td>
-    <td>{{$role->name}}</td>
-    <td>{{$role->guard_name}}</td>
-    <td> <a href="{{route('roles.permissions.index',$role->id)}}" class="btn btn-info">({{$role->permissions_count}}) Permissions</td>
-    <td>{{$role->created_at->format('d-m-y')}}</td>
-    <td>{{$role->updated_at->format('d-m-y')}}</td>
+  {{-- {{ dd($permission)}} --}}
+    <td>{{$permission->id}}</td>
+    <td>{{$permission->name}}</td>
+    <td><span class="badge bg-success">{{$permission->guard_name}}</span></td>
+
+    {{-- <td>@if ($permission->active) Active @else Disables @endif </td> --}}
+    <td>{{$permission->created_at}}</td>
+    <td>{{$permission->updated_at}}</td>
     <td>
         <div class="btn-group">
-          <a href="{{route('roles.edit',$role->id)}}" class="btn btn-info">
+          <a href="{{route('permissions.edit',$permission->id)}}" class="btn btn-info">
             <i class="fas fa-edit"></i>
           </a>
 
@@ -63,13 +62,13 @@
           {{-- ط§ط³طھط®ط¯ط§ظ… ط¬ط§ظپط§ط³ظƒط±ظٹط¨طھ ظ„ط¹ظ…ظ„ظٹط© ط§ظ„ط­ط°ظپ --}}
 
 
-<a href="#" class="btn btn-danger" onclick="confirmdestroy({{$role->id}},this)" >
+<a href="#" class="btn btn-danger" onclick="confirmdestroy({{$permission->id}},this)" >
     <i class="fas fa-trash"></i>
 </a>
 
 
 {{--
-          <form method="POST" action="{{route('categories.destroy',$category->id)}}">
+          <form method="POST" action="{{route('r.destroy',$permission->id)}}">
           @csrf
           @method('DELETE')
             <button type="submit" class="btn btn-danger">
@@ -118,7 +117,7 @@
 
 
 function destroy(id,reference){
-    axios.delete('/admin/roles/' + id)
+    axios.delete('/admin/permissions/' + id)
   .then(function (response) {
     // handle success
      console.log(response);
@@ -129,6 +128,7 @@ function destroy(id,reference){
     // handle error
      console.log(error);
 
+//ط¹ظ†ط¯ظٹ ظ…ط´ظƒظ„ط© ظپظٹظ‡ ط¹ظ…ظ„ظٹط© ط§ظ„ط­ط°ظپ
      showmessage(error.response.data);
   })
 

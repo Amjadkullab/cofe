@@ -7,6 +7,7 @@ use App\Http\Controllers\cofecontroller;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\RolesPermissionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,7 @@ Route::resource('permissions',permissionsController::class);
 Route::resource('/products',ProductController::class);
 Route::resource('admin',AdminController::class);
 Route::resource('user',UserController::class);
+Route::resource('roles.permissions',RolesPermissionsController::class);
 });
 
 Route::prefix('admin')->middleware('auth:admin,user')->group(function(){
