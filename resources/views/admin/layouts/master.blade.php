@@ -270,6 +270,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
 
+          <li class="nav-header">Roles & Permissions</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-tag"></i>
+              <p>
+            Roles
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+
+                <li class="nav-item">
+                    <a href="{{route('roles.create')}}" class="nav-link">
+                      <i class="far fa-plus-square  nav-icon"></i>
+                      <p>create</p>
+                    </a>
+                  </li>
+
+
+              <li class="nav-item">
+                <a href="{{route('roles.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>index</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-key"></i>
+              <p>
+          Permissions
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                      <i class="far fa-plus-square  nav-icon"></i>
+                      <p>create</p>
+                    </a>
+                  </li>
+
+
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>index</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
 
 
 
@@ -284,12 +340,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
-              <li class="nav-item">
-                <a href="{{route('products.create')}}" class="nav-link">
-                  <i class="far fa-plus-square  nav-icon"></i>
-                  <p>create</p>
-                </a>
-              </li>
+                @can('create-product')
+                <li class="nav-item">
+                    <a href="{{route('products.create')}}" class="nav-link">
+                      <i class="far fa-plus-square  nav-icon"></i>
+                      <p>create</p>
+                    </a>
+                  </li>
+                @endcan
+
               <li class="nav-item">
                 <a href="{{route('products.index')}}" class="nav-link">
                   <i class="fas fa-list-ul nav-icon"></i>
@@ -423,6 +482,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{{asset('admin_asset/plugins/toastr/toastr.min.js')}}"></script>
+
 @yield('scripts')
 </body>
 </html>

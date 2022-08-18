@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\User;
 use Dotenv\Validator;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -58,7 +59,7 @@ class AuthController extends Controller
     public function updatepassword(Request $request){
        $guard = auth('admin')->check() ? 'admin':'user';
         $validator = Validator($request->all(),[
-            'current_password'=>"required|string|password:$guard",
+            'current_password'=>'required|string',
             'new_password'=>'required|string|confirmed',
         ]);
         if(!$validator->fails()){

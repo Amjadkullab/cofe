@@ -1,8 +1,13 @@
 @extends('admin.layouts.master')
-@section('title', 'Change Password')
-@section('page-title', 'Change Password')
+@section('title', 'Create Role')
+@section('page-title', 'Create Role')
 @section('main-page-title', 'Home')
-@section('small-page-title', 'change password')
+@section('small-page-title', 'Roles')
+@section('styles')
+<link rel="stylesheet" href="{{asset('admin_asset/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin_asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+')}}
+@endsection
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -12,27 +17,26 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Change Password</h3>
+                            <h3 class="card-title">Create Role</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
                         <form id="created_form">
                             @csrf
+                            <div class="form-group" >
+                                <label>Minimal</label>
+                                <select class="form-control guards" id="guards" style="width: 100%;">
+
+                                  <option value="admin">admin</option>
+                                  <option value="user">user</option>
+
+                                </select>
+                              </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="current_password">Current Password</label>
-                                    <input type="password" class="form-control" id="current_password" placeholder="Enter current password">
+                                    <label for="name">Name</label>
+                                    <input type="name" class="form-control" id="name" placeholder="Enter name">
                                 </div>
-                                <div class="form-group">
-                                    <label for="new_password">New Password</label>
-                                    <input type="password" class="form-control" id="new_password" placeholder="Enter new password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="new_password_confirmation">New Password Confirmation</label>
-                                    <input type="password" class="form-control" id="new_password_confirmation" placeholder="Enter new password">
-                                </div>
-
-
 
                                 <div class="form-group">
                                     <!-- <label for="customFile">Custom File</label> -->
@@ -45,7 +49,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
 
-                                    <button type="button" onclick="updatepassword()" class="btn btn-primary">Update</button>
+                                    <button type="button" onclick="store()" class="btn btn-primary">Store</button>
                                 </div>
                         </form>
                     </div>
@@ -66,20 +70,23 @@
     </div>
 @endsection
 @section('scripts')
+<script src="{{asset('admin_asset/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
-
-    function updatepassword(){
-        axios.put('/admin/update-password',{
-            current_password : document.getElementById('current_password').value,
-            new_password : document.getElementById('new_password').value,
-            new_password_confirmation : document.getElementById('new_password_confirmation').value
+     $('.guards').select2()
+     $('.guards').select2({
+      theme: 'bootstrap4'
+     })
+    function store(){
+        axios.post('/admin/roles/',{
+            name : document.getElementById('name').value,
+            guard_name: document.getElementById('guards').value,
 
          })
   .then(function (response) {
     // handle success
     console.log(response);
     toastr.success(response.data.message);
-    document.getElementById('created_form').reset;
+    window.location.href="/admin/categories/";
   })
   .catch(function (error) {
     // handle error

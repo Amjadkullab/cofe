@@ -4,7 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\cofecontroller;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,13 +41,18 @@ Route::get('{guard}/login',[AuthController::class,'showlogin'])->name('login');
 Route::post('{guard}/login',[AuthController::class,'login'])->name('login');
 });
 
+Route::prefix('admin')->middleware('auth:admin')->group(function(){
+Route::resource('roles',RolesController::class);
+Route::resource('permissions',permissionsController::class);
+Route::resource('/products',ProductController::class);
+Route::resource('admin',AdminController::class);
+Route::resource('user',UserController::class);
+});
+
 Route::prefix('admin')->middleware('auth:admin,user')->group(function(){
 
 Route::get('/',[AdminController::class,'index'])->name('index');
-Route::resource('/products',ProductController::class);
 Route::resource('/categories',CategoryController::class);
-Route::resource('admin',AdminController::class);
-Route::resource('user',UserController::class);
 Route::get('edit-password',[AuthController::class,'editpassword'])->name('edit-password');
 Route::put('update-password',[AuthController::class,'updatepassword']);
 Route::get('edit-profile',[AuthController::class,'editprofile'])->name('edit-profile');
