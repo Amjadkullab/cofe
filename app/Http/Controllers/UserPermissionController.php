@@ -2,45 +2,37 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
-use Spatie\Permission\Models\Permission as ModelsPermission;
 
-class RolesPermissionsController extends Controller
+class UserPermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Role $role)
+    public function index(User $user)
     {
-
-        $permissions = Permission::all();
-        $rolepermissions= $role->permissions;
-        if(count($rolepermissions) > 0){
+        $permissions = Permission::where('guard_name','user')->get();
+        $userpermissions = $user->permissions;
+        if(count($userpermissions)> 0){
             foreach($permissions as $permission){
                 $permission->setAttribute('assigned',false);
-                foreach($rolepermissions as $rolepermission){
-                if($permission->id == $rolepermission->id){
-                    $permission->setAttribute('assigned',true);
-                }
-
+                foreach($userpermissions as $userpermission){
+                    if($permission->id == $userpermission->id){
+                        $permission->setAttribute('assigned',true);
+                    }
                 }
             }
-
-
+            return response()->view('admin.Users.User-permission',[
+                'user'=>$user,
+                'permissions'=>$permissions,
+            ]);
         }
-        return response()->view('admin.Spatie.roles.rolepermission',[
-            'role'=> $role,
-            'permissions' =>$permissions
-           ]);
-
-
 
     }
 
@@ -60,27 +52,27 @@ class RolesPermissionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request , Role $role)
+    public function store(Request $request, User $user)
     {
-        $validator = Validator($request->all(),[
-            'permission_id' => 'required|integer|exists:permissions,id'
-          ]);
-          if(!$validator->fails()){
-            $permission = Permission::findorfail($request->get('permission_id'));
-            if($role->hasPermissionTo($permission)){
-                $role->revokePermissionTo($permission);
-            } else{
-                $role->givePermissionTo($permission);
-            }
-            return response()->json([
-                'message'=> 'updated permission successfully'
-            ],Response::HTTP_OK);
-          } else{
-            return response()->json([
-                'message' => $validator->getMessageBag()->first()
-            ], Response::HTTP_BAD_REQUEST);
-          }
+    $validator = Validator($request->all(),[
+        'permission_id'=>'required|integer|exists:permissions,id'
+    ]);
+    if(!$validator->fails() ){
+        $permission = permission::findorfail($request->get('permission_id'));
+        if($user->hasPermissionTo($permission)){
+            $user->revokePermissionTo($permission);
+        }else{
+            $user->givePermissionTo($permission);
+        }
 
+    return response()->json([
+        'message'=> 'Permission Updated Successfully'
+    ],Response::HTTP_OK);
+}else{
+    return response()->json([
+        'message' => $validator->getMessageBag()->first()
+    ], Response::HTTP_BAD_REQUEST);
+  }
     }
 
     /**

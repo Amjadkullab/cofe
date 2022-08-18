@@ -42,7 +42,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getStatusAttribute(){
-        return $this->active ?'active' : 'Disabled';
+    public function getActiveStatusAttribute(){
+        return $this->active ? 'active' : 'disabled';
     }
 }

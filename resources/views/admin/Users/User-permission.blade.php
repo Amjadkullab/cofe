@@ -1,8 +1,8 @@
 @extends('admin.layouts.master')
-@section('title', 'Role-permission')
-@section('page-title','Role-permission page')
+@section('title', 'User-permission')
+@section('page-title','User-permission page')
 @section('main-page-title','Home')
-@section('small-page-title','Role-permission')
+@section('small-page-title','User-permission')
 @section('styles')
 <link rel="stylesheet" href="{{asset('admin_asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
 @endsection
@@ -17,7 +17,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">{{$role->name}} permissions</h3>
+              <h3 class="card-title">{{$user->name}} permissions</h3>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -52,7 +52,7 @@
         <!-- checkbox -->
 
           <div class="icheck-primary d-inline">
-            <input type="checkbox" onchange="assignpermission({{$role->id}},{{$permission->id}})" id="permission_{{$permission->id}}" @if($permission->assigned) Checked @endif>
+            <input type="checkbox" onchange="assignpermission({{$user->id}},{{$permission->id}})" id="permission_{{$permission->id}}" @if($permission->assigned) Checked @endif>
             <label for="permission_{{$permission->id}}">
             </label>
           </div>
@@ -85,8 +85,8 @@
 @endsection
 @section('scripts')
 <script>
-    function assignpermission(roleId,permissionId){
-        axios.post('/admin/roles/'+roleId+'/permissions',{
+    function assignpermission(userId,permissionId){
+        axios.post('/admin/user/'+userId+'/permissions',{
             permission_id : permissionId
         })
 

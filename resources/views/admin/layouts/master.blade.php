@@ -340,14 +340,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
-                @can('create-product')
+
                 <li class="nav-item">
                     <a href="{{route('products.create')}}" class="nav-link">
                       <i class="far fa-plus-square  nav-icon"></i>
                       <p>create</p>
                     </a>
                   </li>
-                @endcan
+
 
               <li class="nav-item">
                 <a href="{{route('products.index')}}" class="nav-link">
