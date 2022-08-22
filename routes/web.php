@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return bcrypt(123456789);
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return bcrypt(123456789);
+//     return view('welcome');
+// });
 
 
 Route::prefix('cofe')->group(function(){
