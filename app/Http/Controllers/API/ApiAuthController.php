@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +20,27 @@ class ApiAuthController extends Controller
     if(!$validator->fails()){
         $user=User::where('email',$request->get('email'))->first();
         if(Hash::check($request->get('password'),$user->password)){
-            $token = $user->createToken('User-Api');
-            $user->SetAttribute('token',$token->accessToken);
+            if(!$this->checkForActiveTokens($user->id)){
 
-            return response()->json([
-                'message'=> 'login in success','data'=>$user,
-            ],Response::HTTP_OK);
-        }else{
+                $token = $user->createToken('User-Api');
+                $user->setAttribute('token',$token->accessToken);
+
+                return response()->json([
+                    'message'=> 'login in success',
+                    'data'=>$user,
+                ],Response::HTTP_OK);
+            } else{
+                return response()->json([
+                    'message'=> 'unable to login from two devices at same time '
+
+                ],Response::HTTP_OK);
+
+            }
+
+
+            }
+
+        else{
             return response()->json([
                 'message' => 'login in failed'],Response::HTTP_BAD_REQUEST);
         }
@@ -35,6 +50,11 @@ class ApiAuthController extends Controller
             'message'=>$validator->getMessageBag()->first()
         ],Response::HTTP_BAD_REQUEST);
     }
+
+   }
+   private function checkForActiveTokens($userId){
+    return DB::table('oauth_access_tokens')->where('user_id',$userId)->where('revoked',false)->exists();
+
 
    }
    public function logout(){
