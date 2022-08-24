@@ -22,14 +22,12 @@
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="name" class="form-control" id="name" placeholder="Enter name"
-                                      value="@if(old('name')) {{old('name')}}@else
-                                      {{$admin->name}}@endif">
+                                      value="{{old('name')}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="Enter email"
-                                        value="@if (old('email')) {{ old('email') }}
-                                    @else  {{ $admin->email }} @endif">
+                                        value="{{old('email')}}">
                                 </div>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="active"

@@ -4,9 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -45,5 +46,13 @@ class User extends Authenticatable
     ];
     public function getActiveStatusAttribute(){
         return $this->active ? 'active' : 'disabled';
+    }
+    public function findForPassport($username)
+    {
+        return $this->where('email', $username)->first();
+    }
+    public function validateForPassportPasswordGrant($password)
+    {
+        return Hash::check($password, $this->password);
     }
 }
