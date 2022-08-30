@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\ApiAuthController;
+use App\Http\Controllers\API\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,7 @@ Route::prefix('auth')->group(function(){
 Route::prefix('auth')->middleware('auth:api')->group(function(){
     Route::get('logout',[ApiAuthController::class,'logout']);
 });
+// Route::middleware('auth:api')->group(function(){
+// Route::apiResource('categories',[CategoryController::class]);
+// );
+// }

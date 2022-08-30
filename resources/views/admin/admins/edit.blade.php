@@ -22,7 +22,7 @@
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="name" class="form-control" id="name" placeholder="Enter name"
-                                      value="{{old('name')}}">
+                                      value="{{old('name', $admin->name)}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>

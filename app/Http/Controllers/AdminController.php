@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Dotenv\Validator;
+
+use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
@@ -40,6 +43,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator($request->all(),[
             'name'=> 'required|string|min:3|max:20',
             'email'=>'required|string',
@@ -52,6 +56,8 @@ class AdminController extends Controller
             $admin->password = Hash::make('password');
             $admin->active = $request->get('active');
             $isSaved = $admin->save();
+
+            Mail::to('ahmed@email.com')->send(new ContactUsMail($admin));
             return response()->json([
                 'message'=>$isSaved ? 'Saved Successfully': 'Saved Failed'
             ],$isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);

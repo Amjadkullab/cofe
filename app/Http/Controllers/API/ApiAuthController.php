@@ -68,7 +68,7 @@ class ApiAuthController extends Controller
             $response = Http::asForm()->post('http://127.0.0.1:8001/oauth/token',[
                 'grant_type'=>'password',
                 'client_id'=>'3',
-                'client_secret'=>'',
+                'client_secret'=>'Gxfb00wokaiq1kQxQop7cVbULL6EfF0fyaGsxomH',
                 'username'=>$request->get('email'),
                 'password'=>$request->get('password'),
                 'scope'=>'*',
@@ -105,6 +105,9 @@ class ApiAuthController extends Controller
     }
 
    }
+//    private function CheckForActiveTokens($userId){
+//    return DB::table('oauth_access_tokens')->where('user_id',$userId)->('revoked',false)->exists();
+//    }
 
    public function logout(){
     $token = auth('api')->user()->token();

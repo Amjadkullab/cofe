@@ -47,6 +47,9 @@ class User extends Authenticatable
     public function getActiveStatusAttribute(){
         return $this->active ? 'active' : 'disabled';
     }
+    public function category(){
+        return $this->belongsTo(category::class);
+    }
     public function findForPassport($username)
     {
         return $this->where('email', $username)->first();

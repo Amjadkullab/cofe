@@ -80,7 +80,12 @@ class AuthController extends Controller
 
        $view =  auth('admin')->check() ? 'admin.admins.edit' : 'admin.Users.edit' ;
         $guard = auth('admin')->check() ? 'admin': 'user';
-        return response()->view($view,['guard'=>auth($guard)->user(),'redirect' => false]);
+        $admin = auth($guard)->user();
+        return response()->view($view,[
+            'guard'=>auth($guard)->user(),
+            'redirect' => false,
+            'admin' => $admin,
+        ]);
     }
 
     public function logout(Request $request)
