@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use App\Models\product;
+use App\Notifications\NewProductNotification;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
@@ -30,6 +32,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $admin = Auth::guard('admin')->user();
         $categories = category::select(['id','name'])->get();
         return view('admin.Products.create',compact('categories'));
     }
@@ -50,7 +53,7 @@ class ProductController extends Controller
             'image' => 'required|image',
             'category_id' => 'required'
         ]);
-
+     $admin = Auth::guard('admin')->user();
         if (!$validator->fails()) {
 
             $product = new product();
@@ -63,6 +66,7 @@ class ProductController extends Controller
             $product->image = $new_img_name ;
             $product->category_id = $request->get('category_id');
             $isSaved = $product->save();
+            $product->admin->notify(new NewProductNotification($product ,$admin));
             return response()->json([
                 'message' => $isSaved ? 'Saved Successfully' : 'Failed Successfully'
             ], Response::HTTP_OK);
