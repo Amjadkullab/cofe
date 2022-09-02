@@ -3,17 +3,22 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
 
-class notification-menu extends Component
+class NotificationMenu extends Component
 {
+    public $notifications;
+    public $new;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($count=10)
     {
-        //
+        $user = Auth::user();
+        $this->notifications=$user->notifications()->take($count)->get();//في لارفيل علاقلة بين اليوزر وال نوتيفيكاشن
+        $this->new=$user->unreadNotifications()->count();
     }
 
     /**

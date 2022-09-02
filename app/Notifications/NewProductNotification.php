@@ -60,14 +60,10 @@ class NewProductNotification extends Notification
     public function toDatabase($notifiable){
         $body = sprintf('%s applied for a job %s',$this->product->name,$this->category->name);
        return [
-
-
        'title'=>'New Product',
        'body'=> $body,
        'icon'=>'icon-material-outline-group',
-        'url'=>route('products.index',$this->product->id)
-
-
+       'url'=>route('products.index',$this->product->id)
        ];
 
 
