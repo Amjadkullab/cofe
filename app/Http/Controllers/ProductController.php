@@ -53,23 +53,22 @@ class ProductController extends Controller
             'image' => 'required|image',
             'category_id' => 'required'
         ]);
-     $admin = Auth::guard('admin')->user();
+        $admin= Auth::user();
         if (!$validator->fails()) {
-
             $product = new product();
             $product->name = $request->get('name');
             $product->description = $request->get('description');
-
             $ex = $request->file('image')->getClientOriginalExtension();
             $new_img_name = 'vision_cofe' . '.' . time() . '.' . $ex;
             $request->file('image')->move(public_path('uploads'), $new_img_name);
             $product->image = $new_img_name ;
             $product->category_id = $request->get('category_id');
+            $product->admin->notify(new NewProductNotification($product,$admin));
             $isSaved = $product->save();
-            $product->admin->notify(new NewProductNotification($product ,$admin));
             return response()->json([
                 'message' => $isSaved ? 'Saved Successfully' : 'Failed Successfully'
             ], Response::HTTP_OK);
+
         } else {
             return response()->json([
                 'mesaage' => $validator->getMessageBag()->first()

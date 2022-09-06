@@ -6,6 +6,7 @@ use App\Models\Admin;
 use Dotenv\Validator;
 
 use App\Mail\ContactUsMail;
+use App\Notifications\NewProductNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -56,6 +57,8 @@ class AdminController extends Controller
             $admin->password = Hash::make('password');
             $admin->active = $request->get('active');
             $isSaved = $admin->save();
+
+           $admin->notify(new NewProductNotification($admin));
 
             Mail::to('ahmed@email.com')->send(new ContactUsMail($admin));
             return response()->json([

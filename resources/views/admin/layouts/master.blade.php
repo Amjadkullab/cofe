@@ -119,8 +119,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
+        @auth
+        <x-notification-menu count="5" />
+        @endauth
 
-         <x-notification-menu count="5" />
 
 
       <li class="nav-item">

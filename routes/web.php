@@ -52,7 +52,7 @@ Route::post('{guard}/login',[AuthController::class,'login'])->name('login');
 Route::prefix('admin')->middleware('auth:admin')->group(function(){
 Route::resource('roles',RolesController::class);
 Route::resource('permissions',permissionsController::class);
-Route::resource('/products',ProductController::class);
+Route::resource('products',ProductController::class);
 Route::resource('admin',AdminController::class);
 Route::resource('user',UserController::class);
 Route::resource('roles.permissions',RolesPermissionsController::class);
