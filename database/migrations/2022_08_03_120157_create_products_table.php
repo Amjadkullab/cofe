@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('image');
-            $table->foreignId('category_id');
-            $table->foreignId('admin_id');
+            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('admin_id')->constrained('admins');
             $table->timestamps();
         });
     }

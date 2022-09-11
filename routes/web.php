@@ -59,10 +59,13 @@ Route::resource('roles.permissions',RolesPermissionsController::class);
 Route::resource('user.permissions',UserPermissionController::class);
 });
 
+
+
 Route::prefix('admin')->middleware('auth:admin,user')->group(function(){
 
-Route::get('/',[AdminController::class,'index'])->name('index');
-Route::resource('/categories',CategoryController::class);
+    Route::get('/',[AdminController::class,'index'])->name('index');
+
+Route::resource('categories',CategoryController::class);
 Route::get('edit-password',[AuthController::class,'editpassword'])->name('edit-password');
 Route::put('update-password',[AuthController::class,'updatepassword']);
 Route::get('edit-profile',[AuthController::class,'editprofile'])->name('edit-profile');

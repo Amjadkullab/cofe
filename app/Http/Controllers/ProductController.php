@@ -43,7 +43,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request ,product $product)
     {
 
         $validator = Validator($request->all(), [
@@ -53,8 +53,15 @@ class ProductController extends Controller
             'image' => 'required|image',
             'category_id' => 'required'
         ]);
-        $admin= Auth::user();
+
+        $admin = Auth::user();
+
+
         if (!$validator->fails()) {
+
+
+            // $admin->products->create( $request->all() );
+
             $product = new product();
             $product->name = $request->get('name');
             $product->description = $request->get('description');
@@ -63,7 +70,8 @@ class ProductController extends Controller
             $request->file('image')->move(public_path('uploads'), $new_img_name);
             $product->image = $new_img_name ;
             $product->category_id = $request->get('category_id');
-            $product->admin->notify(new NewProductNotification($product,$admin));
+            // $product->admin->notify(new NewProductNotification($product,$admin));
+            $admin->product->notify(new NewProductNotification($admin,$product));
             $isSaved = $product->save();
             return response()->json([
                 'message' => $isSaved ? 'Saved Successfully' : 'Failed Successfully'
@@ -124,7 +132,6 @@ class ProductController extends Controller
         $request->file('image')->move(public_path('uploads'), $new_img_name);
         $product->image = $new_img_name;
        }
-
        $product->catgeory_id = $request->get('category_id');
 
        $isUpdated = $product->save();

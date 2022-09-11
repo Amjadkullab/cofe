@@ -58,7 +58,7 @@ class AdminController extends Controller
             $admin->active = $request->get('active');
             $isSaved = $admin->save();
 
-           $admin->notify(new NewProductNotification($admin));
+        //    $admin->notify(new NewProductNotification($admin));
 
             Mail::to('ahmed@email.com')->send(new ContactUsMail($admin));
             return response()->json([

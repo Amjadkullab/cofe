@@ -16,16 +16,17 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form id="created_form" enctype="multipart/form-data">
+                        <form id="created_form" action="{{ route('products.store') }}" mes enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="admin_id">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="name" class="form-control" id="name" placeholder="Enter name">
+                                    <input type="name" class="form-control" name="name" id="name" placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <input type="text" class="form-control" id="description"
+                                    <input type="text" class="form-control" name="description" id="description"
                                         placeholder=" Enter Description.....">
                                 </div>
                                 {{-- <div class="form-group">
@@ -48,7 +49,7 @@
                                 <div class="form-group">
                                     <label for="category_id">Select Category</label>
 
-                                    <select id="category_id" class="form-control">
+                                    <select id="category_id" name="category_id" class="form-control">
                                         <option value="" selected disabled>Selected Category</option>
 
                                         @foreach ($categories as $category)
