@@ -50,8 +50,8 @@
     <td>{{$admin->name}}</td>
     <td>{{$admin->email}}</td>
     <td><span class="badge @if($admin->active) bg-success  @else bg-danger @endif ">{{$admin->status}}</span></</td>
-    <td>{{$admin->created_at->format('d-m-y')}}</td>
-    <td>{{$admin->updated_at->format('d-m-y')}}</td>
+    <td>{{$admin->created_at}}</td>
+    <td>{{$admin->updated_at}}</td>
     <td>
         <div class="btn-group">
           <a href="{{route('admin.edit',$admin->id)}}" class="btn btn-info">

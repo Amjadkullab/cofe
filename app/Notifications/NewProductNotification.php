@@ -3,7 +3,9 @@
 namespace App\Notifications;
 
 use App\Models\Admin;
+use App\Models\category;
 use App\Models\product;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\AnonymousNotifiable;
@@ -14,17 +16,17 @@ use Illuminate\Notifications\Notification;
 class NewProductNotification extends Notification
 {
     use Queueable;
-    protected $product;
-    protected $admin;
+    protected $category;
+    protected $user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Admin $admin, product $product)
+    public function __construct(User $user, category $category)
     {
-        $this->product = $product;
-        $this->admin = $admin;
+        $this->category = $category;
+        $this->user = $user;
     }
 
     /**
@@ -35,7 +37,7 @@ class NewProductNotification extends Notification
      */
     public function via($notifiable)
     {
-        $via = ['database', 'mail', 'broadcast'];
+        $via = ['database','mail','broadcast'];
         //     if(!$notifiable instanceof AnonymousNotifiable){
         //     if($notifiable->notify_mail){
         //         $via []='mail';
@@ -71,23 +73,23 @@ class NewProductNotification extends Notification
      */
     public function toDatabase($notifiable)
     {
-        $body = sprintf('%s applied for a job %s', $this->product->name, $this->category->name);
+        $body = sprintf(' applied for a category %s', $this->category->name);
         return [
             'title' => 'New Product',
             'body' => $body,
             'icon' => 'icon-material-outline-group',
-            'url' => route('products.index', $this->product_id)
+            'url' => route('categories.index', $this->category_id)
         ];
     }
     public function toBroadcast($notifiable)
     {
-        $body = sprintf('%s applied for a job %s', $this->product->name, $this->category->name);
-        return new BroadcastMessage([
+        $body = sprintf(' applied for a category %s', $this->category->name);
+        return [
             'title' => 'New Product',
             'body' => $body,
             'icon' => 'icon-material-outline-group',
-            'url' => route('products.index', $this->product_id)
-        ]);
+            'url' => route('categories.index', $this->category_id)
+        ];
     }
 
     /**

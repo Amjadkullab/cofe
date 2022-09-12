@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
 use Dotenv\Validator;
+use App\Models\category;
+use App\Notifications\NewProductNotification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
@@ -42,9 +44,11 @@ class CategoryController extends Controller
       $validator = Validator($request->all(),[
         'name' => 'required|string|min:3|max:30',
       ]);
+      $user=Auth::guard('user')->user();
       if(!$validator->fails()){
         $category = new category();
         $category->name = $request->get('name');
+        $category->users->notify(new NewProductNotification($user,$category));
         // $category->slug = $request->get(Str::slug($request->name));
         $isSaved = $category->save();
         return response()->json([

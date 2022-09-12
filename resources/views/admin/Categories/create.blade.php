@@ -18,6 +18,9 @@
                         <!-- form start -->
                         <form id="created_form">
                             @csrf
+                            <div class="form-group">
+                                <input type="hidden" name="user_id">
+                            </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name</label>
@@ -85,7 +88,7 @@
     function store(){
         axios.post('/admin/categories/',{
             name : document.getElementById('name').value,
-  
+
          })
   .then(function (response) {
     // handle success

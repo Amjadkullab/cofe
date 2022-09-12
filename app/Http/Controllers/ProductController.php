@@ -54,7 +54,7 @@ class ProductController extends Controller
             'category_id' => 'required'
         ]);
 
-        $admin = Auth::user();
+        // $admin = Auth::user();
 
 
         if (!$validator->fails()) {
@@ -71,7 +71,6 @@ class ProductController extends Controller
             $product->image = $new_img_name ;
             $product->category_id = $request->get('category_id');
             // $product->admin->notify(new NewProductNotification($product,$admin));
-            $admin->product->notify(new NewProductNotification($admin,$product));
             $isSaved = $product->save();
             return response()->json([
                 'message' => $isSaved ? 'Saved Successfully' : 'Failed Successfully'
