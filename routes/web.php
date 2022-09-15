@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\RolesPermissionsController;
@@ -73,3 +74,6 @@ Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
 
 });
+
+Route::get('messages',[MessageController::class,'create'])->name('messages');
+Route::post('messages',[MessageController::class,'store']);

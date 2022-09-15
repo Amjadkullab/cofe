@@ -67,9 +67,12 @@
             </div>
         </nav>
        @yield('content')
+
         <footer class="footer text-faded text-center py-5">
             <div class="container"><p class="m-0 small">{{__('general.footer')}} &copy; {{env('APP_NAME')}}     ({{now()->year}}-{{now()->year+1}})</p></div>
         </footer>
+        <script> const UserId={{Auth::id()}}; </script>
+        <script src="{{asset('js/app.js')}}"></script>
         <!-- Bootstrap core JS-->
         <script src="{{asset('front_asset/https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js')}}"></script>
         <!-- Core theme JS-->
