@@ -5,8 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Crypt;
 
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider',
+        'provider_id',
+        'provider_token',
     ];
 
     /**
@@ -34,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'provider_token',
     ];
 
     /**
@@ -57,5 +62,11 @@ class User extends Authenticatable
     public function validateForPassportPasswordGrant($password)
     {
         return Hash::check($password, $this->password);
+    }
+    public function setproviderTokenAttribute($value){
+        $this->attributes['provider_token'] = Crypt::encryptString($value);
+    }
+    public function getproviderTokenAttribute($value){
+        return Crypt::decryptString($value);// هيك انا فكيت التشفير
     }
 }

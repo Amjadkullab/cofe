@@ -199,8 +199,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-          <x-messages />
+       {{-- <x-messages /> --}}
 
+
+
+
+
+
+       <li class="nav-item">
+        <a href="{{route('messages.store')}}" class="nav-link">
+          <i class="nav-icon fas fa-envelope"></i>
+          <p>message</p>
+        </a>
+      </li>
+
+
+
+
+{{-- <x-messages/> --}}
           <li class="nav-header">Human Resoueces</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -455,7 +471,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script> const UserId={{Auth::id()}}; </script>
+<script> const UserId={{Auth::id()}} </script>
 <script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('admin_asset/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->

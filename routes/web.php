@@ -12,6 +12,8 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\RolesPermissionsController;
+use App\Http\Controllers\SocialController;
+use App\Http\Controllers\SocialiteController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -45,7 +47,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
 
 
 
-Route::prefix('/')->middleware('guest:admin')->group(function(){
+Route::prefix('/')->middleware('guest:admin,user')->group(function(){
 Route::get('{guard}/login',[AuthController::class,'showlogin'])->name('login');
 Route::post('{guard}/login',[AuthController::class,'login'])->name('login');
 });
@@ -76,4 +78,9 @@ Route::get('logout',[AuthController::class,'logout'])->name('logout');
 });
 
 Route::get('messages',[MessageController::class,'create'])->name('messages');
-Route::post('messages',[MessageController::class,'store']);
+Route::post('messages',[MessageController::class,'store'])->name('messages.store');
+
+Route::get('auth/{provider}/redirect',[SocialiteController::class,'redirect'])->name('auth.socialite.redirect');
+Route::get('auth/{provider}/callback',[SocialiteController::class,'callback'])->name('auth.socialite.callback');
+Route::get('auth/{provider}/user',[SocialController::class,'index']);
+
