@@ -9,6 +9,8 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PaymentscallbackController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\RolesPermissionsController;
@@ -83,4 +85,6 @@ Route::post('messages',[MessageController::class,'store'])->name('messages.store
 Route::get('auth/{provider}/redirect',[SocialiteController::class,'redirect'])->name('auth.socialite.redirect');
 Route::get('auth/{provider}/callback',[SocialiteController::class,'callback'])->name('auth.socialite.callback');
 Route::get('auth/{provider}/user',[SocialController::class,'index']);
-
+Route::get('payments/create',[PaymentsController::class,'create'])->name('payments.create');
+Route::get('/payments/callback/success', [PaymentscallbackController::class,'success'])->name('payments.success');
+Route::get('/payments/callback/cancel', [PaymentscallbackController::class,'cancel'])->name('payments.cancel');

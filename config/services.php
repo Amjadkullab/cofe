@@ -42,5 +42,10 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET '),
         'redirect' => env('APP_URL').'/auth/facebook/callback',
     ],
+    'thawani'=>[
+        'secret_key'=> env('THAWANI_SECRET_KEY'),
+        'publishable_key'=> env('THAWANI_PUBLISHABLE_KEY'),
+        'mode' => 'test',
+    ],
 
 ];
