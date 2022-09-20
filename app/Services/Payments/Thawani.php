@@ -37,6 +37,18 @@ if($body['success']==true && $body['code']==2004){
     $body['description'],$body['code']
 );
 }
+
+public function getCheckoutSession($session_id){
+    $response =  Http::baseUrl($this->baseUrl)->withHeaders([
+        'thawani-api-key' =>$this->secretkey
+    ])->get('checkout/session/'. $session_id)->json();
+
+    if($response['success'] == true && $response['code'] == 2000){
+        return $response;
+    } throw new Exception(
+        $response['description'],$response['code']
+    );
+}
 public function getpayUrl($session_id){
      if($this->mode =='test'){
         return "https://uatcheckout.thawani.om/pay/{$session_id}?key={$this->publishablekey}";
@@ -46,6 +58,7 @@ public function getpayUrl($session_id){
 
 
 }
+
 
 
 }
