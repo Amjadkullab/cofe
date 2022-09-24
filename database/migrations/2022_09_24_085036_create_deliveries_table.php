@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            // $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            $table->point('current_location')->nullable();
+            $table->enum('status',['pending','in-progress','delivered'])->default('pending');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('deliveries');
     }
 };

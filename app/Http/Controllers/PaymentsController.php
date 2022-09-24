@@ -25,7 +25,7 @@ class PaymentsController extends Controller
                 [
                 'name' => 'test product',
                 'quantity' => '2',
-                'unit_amount' => '100',
+                'unit_amount' => '300',
                 ],
             ],
             'success_url' => route('payments.success'),
@@ -38,7 +38,7 @@ class PaymentsController extends Controller
                 'gateway'=>'thawani',
                 'reference_id'=>$session_id,
                 'status'=>'pending',
-                'amount'=>'100',
+                'amount'=>'300',
  ]); //هاي ال forcecreate بدل ال fillable احنا استخدمناها
             Session::put('payment_id',$payment->id);
             Session::put('session_id',$session_id);

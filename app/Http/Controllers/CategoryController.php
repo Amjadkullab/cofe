@@ -48,7 +48,7 @@ class CategoryController extends Controller
       if(!$validator->fails()){
         $category = new category();
         $category->name = $request->get('name');
-        $category->users->notify(new NewProductNotification($user,$category));
+        // $category->users->notify(new NewProductNotification($user,$category));
         // $category->slug = $request->get(Str::slug($request->name));
         $isSaved = $category->save();
         return response()->json([

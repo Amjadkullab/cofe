@@ -21,6 +21,9 @@ class product extends Model
   public function admin(){
     return $this->belongsTo(Admin::class);
   }
+  public function delivery(){
+    return $this->hasone(Delivery::class);
+  }
 
 
 }

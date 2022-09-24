@@ -18,9 +18,9 @@
                         <!-- form start -->
                         <form id="created_form">
                             @csrf
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <input type="hidden" name="user_id">
-                            </div>
+                            </div> --}}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name</label>
