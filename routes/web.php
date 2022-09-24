@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\DeliveresController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\front\productscontroller;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PaymentscallbackController;
 use App\Http\Controllers\PaymentsController;
@@ -91,3 +92,4 @@ Route::get('/payments/callback/success', [PaymentscallbackController::class,'suc
 Route::get('/payments/callback/cancel', [PaymentscallbackController::class,'cancel'])->name('payments.cancel');
 Route::get('deliveries/{delivery}',[DeliveresController::class,'show']);
 Route::put('deliveries/{delivery}',[DeliveresController::class,'update']);
+Route::get('products/{product}',[productscontroller::class,'show'])->name('products.show');

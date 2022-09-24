@@ -17,7 +17,7 @@ class productscontroller extends Controller
 
 
     ])->first();
-    return view('front.products.show',[
+    return view('admin.productss.show',[
         'product'=>$product,
         'delivery'=>$delivery
     ]);
